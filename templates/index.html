@@ -13,63 +13,81 @@
             min-height: 100vh;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #333;
+            font-size: 14px;
         }
         
         .main-container {
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
-            margin: 20px auto;
-            max-width: 1000px;
+            margin: 15px auto;
+            max-width: 900px;
         }
         
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
-            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
             text-align: center;
         }
         
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
         .content {
-            padding: 30px;
+            padding: 20px;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
         .form-label {
-            font-weight: 600;
+            font-weight: 500;
             color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
         }
         
         .form-control, .form-select {
-            border-radius: 10px;
-            border: 2px solid #e9ecef;
-            padding: 12px 15px;
-            transition: all 0.3s ease;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            height: auto;
         }
         
         .form-control:focus, .form-select:focus {
             border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            box-shadow: 0 0 0 0.15rem rgba(102, 126, 234, 0.2);
+        }
+        
+        .btn {
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
         
         .btn-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
-            border-radius: 10px;
-            padding: 12px 30px;
-            font-weight: 600;
-            transition: all 0.3s ease;
         }
         
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
         
         .btn-primary:disabled {
@@ -78,40 +96,56 @@
             box-shadow: none;
         }
         
+        .btn-lg {
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-outline-primary {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+        
         .progress {
-            height: 10px;
-            border-radius: 10px;
+            height: 8px;
+            border-radius: 8px;
             background-color: #e9ecef;
         }
         
         .progress-bar {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
+            border-radius: 8px;
         }
         
         .log-container {
             background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            max-height: 300px;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: 250px;
             overflow-y: auto;
-            border: 2px solid #e9ecef;
+            border: 1px solid #e9ecef;
         }
         
         .log-entry {
-            margin-bottom: 8px;
-            padding: 8px 12px;
-            border-radius: 6px;
+            margin-bottom: 6px;
+            padding: 6px 10px;
+            border-radius: 5px;
             background: white;
-            border-left: 4px solid #667eea;
+            border-left: 3px solid #667eea;
+            font-size: 0.8rem;
         }
         
         .status-indicator {
             display: inline-block;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            margin-right: 8px;
+            margin-right: 6px;
         }
         
         .status-loading {
@@ -135,11 +169,11 @@
         
         .file-upload-area {
             border: 2px dashed #667eea;
-            border-radius: 10px;
-            padding: 40px;
+            border-radius: 8px;
+            padding: 25px;
             text-align: center;
             background: #f8f9fa;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             cursor: pointer;
         }
         
@@ -153,24 +187,158 @@
             background: #d4edda;
         }
         
+        .file-upload-area h5 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+        
+        .file-upload-area p {
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+        }
+        
         .settings-card {
             background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
         }
         
         .alert {
-            border-radius: 10px;
+            border-radius: 8px;
             border: none;
+            padding: 12px 15px;
+            font-size: 0.85rem;
         }
         
         .result-section {
             background: #e8f5e8;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px solid #28a745;
+        }
+        
+        .card {
             border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 2px solid #28a745;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-header {
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 12px 15px;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .card-header h5 {
+            font-size: 0.95rem;
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .card-body {
+            padding: 15px;
+        }
+        
+        .form-check {
+            margin-bottom: 8px;
+        }
+        
+        .form-check-input {
+            margin-top: 0.2rem;
+        }
+        
+        .form-check-label {
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+        
+        .text-muted {
+            font-size: 0.8rem;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1.2rem !important;
+        }
+        
+        .mb-3 {
+            margin-bottom: 0.8rem !important;
+        }
+        
+        .mt-3 {
+            margin-top: 0.8rem !important;
+        }
+        
+        .mt-4 {
+            margin-top: 1.2rem !important;
+        }
+        
+        .fa-3x {
+            font-size: 2rem;
+        }
+        
+        .fa-2x {
+            font-size: 1.5rem;
+        }
+        
+        .me-2 {
+            margin-right: 0.5rem !important;
+        }
+        
+        .me-3 {
+            margin-right: 0.8rem !important;
+        }
+        
+        .mb-3 {
+            margin-bottom: 0.8rem !important;
+        }
+        
+        .mb-0 {
+            margin-bottom: 0 !important;
+        }
+        
+        .text-center {
+            text-align: center !important;
+        }
+        
+        .d-flex {
+            display: flex !important;
+        }
+        
+        .align-items-center {
+            align-items: center !important;
+        }
+        
+        .d-none {
+            display: none !important;
+        }
+        
+        .overflow-y-auto {
+            overflow-y: auto !important;
+        }
+        
+        .position-relative {
+            position: relative !important;
+        }
+        
+        .w-100 {
+            width: 100% !important;
+        }
+        
+        .h-100 {
+            height: 100% !important;
+        }
+        
+        .row {
+            margin-left: -7.5px;
+            margin-right: -7.5px;
+        }
+        
+        .col-md-6 {
+            padding-left: 7.5px;
+            padding-right: 7.5px;
         }
     </style>
 </head>
