@@ -1,0 +1,5 @@
+venv/
+weights/
+rec2/
+__pycache__/
+intellidoc/__pycache__/
