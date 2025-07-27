@@ -25,24 +25,28 @@ if not exist "venv" (
         pause
         exit /b 1
     )
+
+    :: Activate virtual environment
+    echo Activating virtual environment...
+    call venv\Scripts\activate.bat
+
+    :: Install/upgrade pip
+    echo Upgrading pip...
+    python -m pip install --upgrade pip
+
+    :: Install requirements
+    echo Installing requirements...
+    pip install -r requirements.txt
+    if errorlevel 1 (
+        echo ERROR: Failed to install requirements
+        pause
+        exit /b 1
+    )
 )
 
 :: Activate virtual environment
 echo Activating virtual environment...
 call venv\Scripts\activate.bat
-
-:: Install/upgrade pip
-echo Upgrading pip...
-python -m pip install --upgrade pip
-
-:: Install requirements
-echo Installing requirements...
-pip install -r requirements.txt
-if errorlevel 1 (
-    echo ERROR: Failed to install requirements
-    pause
-    exit /b 1
-)
 
 :: Check if weights directory exists
 if not exist "weights" (
