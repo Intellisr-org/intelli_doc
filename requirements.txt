@@ -11,3 +11,5 @@ numpy>=2.0.0,<2.3.0
 ftfy>=6.1.1
 pypdfium2>=4.27.0 
 ultralytics>=8.3.100
+Flask>=2.3.0
+Werkzeug>=2.3.0
