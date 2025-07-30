@@ -421,7 +421,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="form-check mt-4">
-                                        <input class="form-check-input" type="checkbox" id="saveJsonCheck" checked>
+                                        <input class="form-check-input" type="checkbox" id="saveJsonCheck">
                                         <label class="form-check-label" for="saveJsonCheck">
                                             Save JSON intermediate files
                                         </label>
@@ -450,12 +450,19 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Processing Progress</h5>
+                            <div class="realtime-indicator">
+                                <span>Real-time updates enabled</span>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="progress mb-3">
                                 <div class="progress-bar" id="progressBar" role="progressbar" style="width: 0%"></div>
                             </div>
                             <p class="text-center mb-0" id="progressText">Initializing...</p>
+                            <div class="processing-status mt-3" id="processingStatus" style="display: none;">
+                                <div class="status-dot active"></div>
+                                <span class="small text-muted">Processing in progress...</span>
+                            </div>
                         </div>
                     </div>
                 </div>

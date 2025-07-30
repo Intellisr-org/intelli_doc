@@ -61,6 +61,19 @@ set DETECTOR_BATCH_SIZE=18
 set ORDER_BATCH_SIZE=16
 set RECOGNITION_STATIC_CACHE=true
 
+:: Check and kill any process running on port 8000
+echo Checking for processes running on port 8000...
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8000') do (
+    echo Found process with PID %%a on port 8000
+    echo Killing process...
+    taskkill /PID %%a /F >nul 2>&1
+    if errorlevel 1 (
+        echo WARNING: Could not kill process on port 8000
+    ) else (
+        echo Successfully killed process on port 8000
+    )
+)
+
 :: Run the Flask application
 echo.
 echo Starting IntelliDoc Flask Application...
@@ -75,6 +88,3 @@ if errorlevel 1 (
     echo ERROR: Application failed to start
     pause
 )
-
-:: Deactivate virtual environment
-call venv\Scripts\deactivate.bat 
