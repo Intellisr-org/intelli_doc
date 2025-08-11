@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw
 import torch
 import logging
 import re
-from pdf2image import convert_from_path
+import fitz  # PyMuPDF - simpler alternative to pdf2image
 from ultralytics import YOLO
 
 # Import Surya models
@@ -36,6 +36,25 @@ class CustomJSONEncoder(json.JSONEncoder):
 
 def serialize_result(result):
     return json.dumps(result, cls=CustomJSONEncoder, indent=2)
+
+def convert_pdf_to_images(pdf_path, dpi):
+    """Convert PDF to a list of PIL Image objects using PyMuPDF."""
+    try:
+        doc = fitz.open(pdf_path)
+        images = []
+        for page_num in range(len(doc)):
+            page = doc.load_page(page_num)
+            # Calculate zoom factor based on DPI (72 DPI is the default)
+            zoom = dpi / 72.0
+            mat = fitz.Matrix(zoom, zoom)
+            pix = page.get_pixmap(matrix=mat)
+            img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+            images.append(img)
+        doc.close()
+        return images
+    except Exception as e:
+        logger.error(f"Error converting PDF to images: {e}")
+        raise
 
 def draw_boxes(image, predictions, color=(255, 0, 0)):
     """Draw bounding boxes on image"""
@@ -437,7 +456,7 @@ class PDFWordConverterGUI:
             # Step 1: Convert to images if PDF
             if file_ext == '.pdf':
                 self.log_message("Converting PDF to images...")
-                images = convert_from_path(input_path, dpi=self.dpi_var.get())
+                images = convert_pdf_to_images(input_path, self.dpi_var.get())
                 self.log_message(f"PDF converted to {len(images)} pages")
             else:
                 images = [Image.open(input_path)]

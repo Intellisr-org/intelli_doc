@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, jsonify, send_file, session, 
 from werkzeug.utils import secure_filename
 from PIL import Image, ImageDraw
 import torch
-from pdf2image import convert_from_path
+import fitz  # PyMuPDF - simpler alternative to pdf2image
 from ultralytics import YOLO
 import tempfile
 import shutil
@@ -446,7 +446,7 @@ def process_file(input_path, output_dir, language, dpi, confidence, save_json, s
         if file_ext == '.pdf':
             emit_progress(task_id, 'pdf_conversion', "Converting PDF to images...", 10)
             log_messages.append("Converting PDF to images...")
-            images = convert_from_path(input_path, dpi=dpi)
+            images = convert_pdf_to_images(input_path, dpi)
             log_messages.append(f"PDF converted to {len(images)} pages")
             emit_progress(task_id, 'pdf_conversion', f"PDF converted to {len(images)} pages", 20)
         else:
@@ -555,6 +555,25 @@ def process_file(input_path, output_dir, language, dpi, confidence, save_json, s
             'log': log_messages
         }
 
+def convert_pdf_to_images(pdf_path, dpi):
+    """Convert PDF to a list of PIL Image objects using PyMuPDF."""
+    try:
+        doc = fitz.open(pdf_path)
+        images = []
+        for page_num in range(len(doc)):
+            page = doc.load_page(page_num)
+            # Calculate zoom factor based on DPI (72 DPI is the default)
+            zoom = dpi / 72.0
+            mat = fitz.Matrix(zoom, zoom)
+            pix = page.get_pixmap(matrix=mat)
+            img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+            images.append(img)
+        doc.close()
+        return images
+    except Exception as e:
+        logger.error(f"Error converting PDF to images: {e}")
+        raise
+
 def create_word_document(image, ocr_results, layout_results, output_path, confidence):
     """Create Word document from OCR and layout results"""
     try:
@@ -564,6 +583,17 @@ def create_word_document(image, ocr_results, layout_results, output_path, confid
     except Exception as e:
         logger.error(f"Error creating Word document: {e}")
         return False
+
+def convert_pdf_to_images(pdf_path, dpi):
+    """Convert PDF to a list of PIL Image objects."""
+    doc = fitz.open(pdf_path)
+    images = []
+    for page_num in range(len(doc)):
+        page = doc.load_page(page_num)
+        pix = page.get_pixmap(dpi=dpi)
+        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+        images.append(img)
+    return images
 
 @app.route('/api/download/<path:filename>')
 def download_file(filename):
