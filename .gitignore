@@ -3,3 +3,6 @@ weights/
 rec2/
 __pycache__/
 intellidoc/__pycache__/
+.DS_Store
+outputs/
+uploads/

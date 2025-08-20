@@ -6,7 +6,7 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import re
 from table_recognition import TableRecognition
-
+from heading_processor import HeadingProcessor
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +18,9 @@ class WordDocumentProcessor:
         """Create Word document from OCR and layout results"""
         try:
             doc = Document()
-            
+            # Process headings
+            heading_processor = HeadingProcessor(ocr_results, layout_results)
+            ocr_results, layout_results = heading_processor()
             for i, (ocr_result, layout_result) in enumerate(zip(ocr_results, layout_results)):
                 page_num = i + 1
                 
@@ -26,7 +28,7 @@ class WordDocumentProcessor:
                     doc.add_page_break()
                 
                 # Add page number as comment
-                doc.add_paragraph(f"--- Page {page_num} ---", style='Heading 3')
+                doc.add_paragraph(f"Page Number: {page_num}", style='Heading 3')
                 
                 # Process based on layout if available
                 if 'layout_predictions' in layout_result and layout_result['layout_predictions']:
@@ -177,10 +179,20 @@ class WordDocumentProcessor:
     def add_formatted_text(self, doc, text, label, relevant_lines_full, layout_box, page_data,image):
         """Add formatted text to document based on label"""
         try:
-            if label == 'Title':
+            # Handle heading categories from heading processor
+            if label.startswith('Heading_'):
+                heading_category = label.replace('Heading_', '')
+                if heading_category == 'MainHeadings':
+                    doc.add_heading(text, level=1)
+                elif heading_category == 'SubHeadings':
+                    doc.add_heading(text, level=2)
+                elif heading_category == 'SectionHeadings':
+                    doc.add_heading(text, level=3)
+                else:
+                    # Default heading level for unknown categories
+                    doc.add_heading(text, level=2)
+            elif label == 'Title':
                 doc.add_heading(text, level=0)
-            elif label == 'SectionHeader':
-                doc.add_heading(text, level=1)
             elif label == 'List':
                 doc.add_paragraph(text, style='List Bullet')
             elif label == 'Formula':
